@@ -1,0 +1,70 @@
+﻿@model User
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = ViewBag.Action=="add"? "مستخدم جديد":"تحديث بيانات المستخدم";
+
+}
+
+<form method="post" class="bg-info text-dark  p-5">
+    <h2 class="text-center text-success">@(ViewBag.Action=="add"?"تسجيل مستخدم جديد":$"تحديث بيانات {Model.FullName}")</h2>
+    <div asp-validation-summary="ModelOnly"></div>
+    @if(ViewBag.Action=="update")
+    {
+        <input hidden asp-for="UserId" />
+        <input hidden asp-for="Password" />
+    }
+    <div class="row mb-3 mx-0 justify-content-center">
+        <div class="col-12 mb-3">
+            <label asp-for="FullName" class="fw-bold d-block form-label mt-3">الإسم بالكامل</label>
+            <input asp-for="FullName" class="form-control" />
+            <span asp-validation-for="FullName"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="Email" class="fw-bold d-block form-label mt-3">الإيميل</label>
+            <input asp-for="Email" class="form-control" />
+            <span asp-validation-for="Email"></span>
+        </div>
+        @if (ViewBag.Action == "add")
+        {
+            <div class="col-12">
+                <label asp-for="Password" class="fw-bold d-block form-label mt-3">الرقم السري</label>
+            <input asp-for="Password" class="form-control" />
+            <span asp-validation-for="Password"></span>
+        </div>
+        }
+        <div class="col-12">
+            <label asp-for="PhoneNumber" class="fw-bold d-block form-label mt-3">رقم الهاتف</label>
+            <input asp-for="PhoneNumber" class="form-control" />
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="BirthDate" class="fw-bold d-block form-label mt-3">تاريخ الميلاد</label>
+            <input asp-for="BirthDate" class="form-control" />
+            <span asp-validation-for="BirthDate"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="RoleId" class="fw-bold d-block form-label mt-3">الوظيفة</label>
+            <select asp-for="RoleId" class="form-select" asp-items="ViewBag.Roles">
+                <option value="" selected>إختر ...</option>
+            </select>
+            <span asp-validation-for="RoleId"></span>
+        </div>
+        <div class="col-12">
+            <label asp-for="Gender" class="fw-bold d-block form-label mt-3">الجنس</label>
+            <select asp-for="Gender" class="form-select">
+                <option value="" selected>إختر ...</option>
+                <option value="m">ذكر</option>
+                <option value="f">أنثى</option>
+            </select>
+            <span asp-validation-for="Gender"></span>
+        </div>
+    </div>
+
+    <div class="mt-2 d-flex justify-content-end gap-3">
+        <input type="submit" value="@(ViewBag.Action=="add"?"التسجيل":"التحديث")" class="btn btn-success d-inline-block  px-3" />
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

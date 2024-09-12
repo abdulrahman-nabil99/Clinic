@@ -1,0 +1,46 @@
+﻿@model IEnumerable<Appointment>
+@{
+    ViewData["Title"] = "الحجوزات";
+    Layout = "_DashboardLayout";
+}
+
+<form method="get" class="my-4">
+    <input type="date" name="targetDate" class="form-control w-50 d-inline-block" />
+    <input type="submit" value="بحث" class="btn btn-primary d-inline-block" />
+</form>
+<h2 class="h2">التاريخ : @ViewBag.Date.ToString("D",new CultureInfo("ar-EG"))</h2>
+<table class="table-bordered table-hover table">
+    <thead>
+        <tr class="bg-light">
+            <th>رقم الحجز</th>
+            <th>إسم المريض</th>
+            <th>الخدمة</th>
+            <th>الحالة</th>
+            <th>خيارات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr class="bg-warning ">
+                <td colspan="5">لا يوجد حجوزات لعرضها</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var appointment in Model)
+            {
+                <tr>
+                    <td>@appointment.AppointmentId</td>
+                    <td>@appointment.Patient.FullName</td>
+                    <td>@appointment.Service.ServiceName</td>
+                    <td>@(appointment.Status==AppointmentStatus.Booked?"تم الحجز":(appointment.Status==AppointmentStatus.Cancelled?"تم الإلغاء":"تم الكشف"))</td>
+                    <td>
+                        <a asp-action="NewRecord" asp-controller="Dashboard" asp-route-id="@appointment.AppointmentId" class="btn btn-info">إضافة التقرير الطبي</a>
+                        <a asp-action="CancelAppointment" asp-controller="Dashboard" asp-route-id="@appointment.AppointmentId" class="btn btn-info">إلغاء الحجز</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

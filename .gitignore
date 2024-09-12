@@ -1,0 +1,9 @@
+/Clinic system/bin/
+/Clinic system/obj/
+/.vs/
+*.user
+*.suo
+*.userosscache
+*.suo
+*.swp
+*.vscode/

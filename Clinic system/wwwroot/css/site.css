@@ -1,0 +1,225 @@
+.cairo-font {
+  font-family: "Cairo", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "slnt" 0;
+}
+html {
+  font-size: 16px;
+  direction: rtl;
+  box-sizing: border-box;
+}
+nav {
+  background-color: #343a40;
+  z-index: 9999;
+  top:0;
+}
+nav a,
+.nav-item a,
+.nav-item a:active,
+.nav-item a:visited {
+  text-decoration: none;
+  color: white;
+  cursor: pointer;
+  font-size:18px
+}
+.nav-item a:hover {
+  color: gold;
+  background-color: black;
+}
+.nav-item a {
+  display: inline-block;
+  padding: 20px 30px;
+}
+nav a:hover {
+  color: white;
+}
+.dropdown-menu {
+  background-color: #343a40;
+}
+
+body > .container {
+  margin-top: 70px;
+}
+
+.navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 1)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
+}
+.book-now {
+  order: 2;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: gold;
+  color: #343a40;
+  border-radius: 8px;
+  font-weight: bold;
+}
+.book-now:hover {
+  background-color: rgb(235, 211, 74);
+  color: #343a40;
+}
+#main-photo {
+  padding-top: 55px;
+  background-image: url("../imgs/4.jpg");
+  height: 100vh;
+  background-position: center center;
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+#btn-aboutus {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #343a40;
+  color: white;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+}
+#btn-aboutus:hover {
+  color: gold;
+  background-color: black;
+}
+#our-services {
+  background-color: #343a40;
+  padding: 30px 0;
+}
+#our-services h2 {
+  color: gold;
+}
+.service-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.service-card {
+  border-radius: 8px;
+  padding: 0;
+  overflow: hidden;
+  background-color: white;
+  width: 30%;
+  margin-bottom: 30px;
+}
+.service-card img {
+  width: 100%;
+  border-bottom: 2px solid gold;
+}
+.service-card h3 {
+  color: #343a40;
+  padding: 5px 10px;
+}
+.service-card p {
+  color: #343a40;
+  padding: 0 10px;
+}
+#contact-us {
+  padding: 30px 0;
+}
+#contact-us h2 {
+  padding: 10px 0;
+}
+#contact-us form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+#contact-us form > .form-floating {
+  width: 48%;
+  margin-bottom: 10px;
+}
+#contact-us form > textarea {
+  width: 100%;
+}
+.form-floating label {
+  right: 0;
+  left: auto;
+}
+
+#book-now-section {
+  background-color: #343a40;
+  padding: 30px 0;
+}
+#book-now-section > .container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+#book-now-section > .container div:first-child {
+  width: 60%;
+}
+#book-now-section h3 {
+  color: gold;
+}
+#book-now-section p {
+  color: white;
+}
+
+textarea{
+    resize: none;
+}
+
+footer {
+    background-color: #343a40;
+    border-top: 10px solid #fdd31d;
+}
+footer ul {
+padding-right:10px;
+
+}
+footer ul a {
+  text-decoration: none;
+  color: #ffffff;
+}
+footer h3 {
+  color: gold;
+  font-size:18px;
+}
+footer h4 {
+  color: white;
+  font-size:16px;
+}
+
+footer p {
+  color: white;
+  font-size:14px;
+  margin: 0 auto;
+}
+footer ul a:hover {
+  text-decoration: none;
+  color: #fdd31d;
+}
+@media (max-width: 990px) and (min-width: 576px) {
+  .service-card {
+    width: 45%;
+  }
+}
+
+@media (max-width: 576px) {
+  .navbar-collapse {
+    order: 2 !important;
+  }
+  .book-now {
+    order: 1 !important;
+    margin: 10px 0;
+  }
+  .nav-link {
+    display: block !important;
+  }
+  .navbar-nav {
+    padding-right: 0;
+  }
+  .service-card {
+    width: 100%;
+  }
+  #contact-us form > .form-floating {
+    width: 100%;
+  }
+  #book-now-section > .container {
+    flex-direction: column;
+  }
+  #book-now-section > .container div:first-child {
+    width: 100%;
+  }
+}

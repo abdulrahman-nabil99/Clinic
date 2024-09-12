@@ -1,0 +1,51 @@
+﻿@model BookViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "حجز موعد";
+    var year = DateTime.Now.Year;
+    var month = DateTime.Now.Month;
+    var day = DateTime.Now.Hour > 16 ? DateTime.Now.Day+1 :DateTime.Now.Day;
+}
+
+<div class="container">
+    <form method="post" class="bg-info text-dark  p-5">
+        <h2 class="text-center text-success">حجز موعد</h2>
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="row mb-3 mx-0 justify-content-center">
+            <div class="col-12 mb-3">
+                <label asp-for="Name" class="fw-bold d-block form-label mt-3">الإسم</label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Email" class="fw-bold d-block form-label mt-3">الإيميل</label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Phone" class="fw-bold d-block form-label mt-3">رقم الهاتف</label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="Date" class="fw-bold d-block form-label mt-3">التاريخ</label>
+                <input asp-for="Date" class="form-control" min="@($"{year}-{month:D2}-{day:D2}")" />
+                <span asp-validation-for="Date"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="ServiceId" class="fw-bold d-block form-label mt-3">الخدمة</label>
+                <select asp-for="ServiceId" class="form-select" asp-items="@ViewBag.Services">
+                    <option value="" selected>إختر ...</option>
+                </select>
+                <span asp-validation-for="ServiceId"></span>
+            </div>
+        </div>
+
+        <div class="mt-2 d-flex justify-content-end gap-3">
+            <input type="submit" value="الحجز" class="btn btn-success d-inline-block  px-3" />
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

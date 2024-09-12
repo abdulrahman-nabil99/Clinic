@@ -1,0 +1,41 @@
+﻿@model IEnumerable<User>
+@{
+    ViewData["Title"] = "الأطباء";
+    Layout = "_DashboardLayout";
+}
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr class="bg-light">
+            <th>رقم</th>
+            <th>الإسم</th>
+            <th>رقم الهاتف</th>
+            <th>الإيميل</th>
+            <th>خيارات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model.Count() <= 0)
+        {
+            <tr class="bg-warning ">
+                <td colspan="5">لا يوجد أطباء لعرضهم</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var doctor in Model)
+            {
+                <tr>
+                    <td>@doctor.UserId</td>
+                    <td>@doctor.FullName</td>
+                    <td>@doctor.PhoneNumber</td>
+                    <td>@doctor.Email</td>
+                    <td class="control-options">
+                        <a asp-action="UpdateUser" asp-controller="Dashboard" asp-route-id="@doctor.UserId">تعديل البيانات</a>
+                        <a asp-action="UpdateUserPassword" asp-controller="Dashboard" asp-route-id="@doctor.UserId">تعديل الرقم السري</a>
+                        <a asp-action="DeleteUser" asp-controller="Dashboard" asp-route-id="@doctor.UserId">حذف المستخدم</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

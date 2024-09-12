@@ -1,0 +1,94 @@
+﻿@model Article
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = Model is null? $"إضافة مقال جديد": "تعديل مقال";
+}
+<div class="container">
+    <div class="post-container">
+        <form method="post" id="postForm" enctype="multipart/form-data">
+            @if (Model is not null)
+            {
+                <input asp-for="Id" hidden />
+                <input asp-for="Thumbnail" hidden />
+
+            }
+            <div class="row">
+                <label asp-for="Title" class="form-label fs-4 col-md-2 col-sm-12">العنوان :</label>
+                <div class="px-3 col">
+                    <input asp-for="Title" class="form-control" />
+                    <span asp-validation-for="Title"></span>
+                </div>
+            </div>
+            <input asp-for="Content" id="article-content" hidden />
+
+
+            <div class="toolbar">
+
+                <!-- Font Size Control -->
+                <select onchange="applyFontSize(this.value)">
+                    <option value="">Font Size</option>
+                    <option value="12">12px</option>
+                    <option value="16">16px</option>
+                    <option value="20">20px</option>
+                    <option value="24">24px</option>
+                    <option value="32">32px</option>
+                    <option value="38">38px</option>
+                </select>
+
+                <!-- Text Color Control -->
+                <input type="color" onchange="applyStyle('color', this.value)" />
+
+                <!-- Insert Image by URL -->
+                <a onclick="insertImageByUrl()">
+                    <img width="20px" src="/imgs/icons/image-icon.svg" alt="Image" />
+                </a>
+
+                <a onclick="execCommand('bold')">
+                    <img width="20px" src="/imgs/icons/bold-icon.svg" alt="Bold" />
+                </a>
+
+                <a onclick="execCommand('italic')">
+                    <img width="20px" src="/imgs/icons/italic-icon.svg" alt="Italic" />
+                </a>
+
+                <a onclick="execCommand('underline')">
+                    <img width="20px" src="/imgs/icons/underline-icon.svg" alt="Under line" />
+                </a>
+
+                <a onclick="execCommand('justifyRight')">
+                    <img width="20px" src="/imgs/icons/align-right-icon.svg" alt="Justify Right" />
+                </a>
+
+                <a onclick="execCommand('justifyCenter')">
+                    <img width="20px" src="/imgs/icons/align-center-icon.svg" alt="Justify Center" />
+                </a>
+
+                <a onclick="execCommand('justifyLeft')">
+                    <img width="20px" src="/imgs/icons/align-left-icon.svg" alt="Justify Left" />
+                </a>
+
+
+            </div>
+
+            <div contenteditable="true" id="content" class="text-editor">
+                @if (Model is not null)
+                {
+                    @Html.Raw(Model.Content)
+                }
+            </div>
+            
+            <div class="row mt-4">
+                <label for="img" class="form-label fs-4 col-md-4 col-sm-12">الصورة المصغرة :</label>
+                <div class="px-3 col">
+                    <input name="img" id="img" type="file" class="form-control" />
+                </div>
+            </div>
+
+            <input type="submit" value="@(Model is null?"إضافة المقال":"تعديل")" class="btn btn-success my-3" />
+        </form>
+    </div>
+</div>
+
+@section Scripts{
+    <script src="/js/article.js"></script>
+}

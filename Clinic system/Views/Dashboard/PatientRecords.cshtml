@@ -1,0 +1,43 @@
+﻿@model ICollection<MedicalRecord>
+@{
+    ViewData["Title"] = $"التقارير الطبية ل{ViewBag.PatientName}";
+    Layout = "_DashboardLayout";
+}
+
+<h2 class="h2">التقارير الطبية لـ @ViewBag.PatientName</h2>
+<table class="table-bordered table-hover table">
+    <thead>
+        <tr class="bg-light">
+            <th>رقم التقرير</th>
+            <th>إسم المريض</th>
+            <th>تاريخ التقرير</th>
+            <th>التشخيص</th>
+            <th>العلاج</th>
+            <th>خيارات</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (!Model.Any())
+        {
+            <tr class="bg-warning ">
+                <td colspan="6">لا يوجد تقارير مسجلة للمريض لعرضها</td>
+            </tr>
+        }
+        else
+        {
+            foreach (var record in Model)
+            {
+                <tr>
+                    <td>@record.MedicalRecordId</td>
+                    <td>@record.Patient.FullName</td>
+                    <td>@record.RecordDate.Date.ToString("D", new CultureInfo("ar-EG"))</td>
+                    <td>@record.Diagnosis</td>
+                    <td>@record.Treatment</td>
+                    <td>
+                        <a class="btn btn-info">المزيد</a>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

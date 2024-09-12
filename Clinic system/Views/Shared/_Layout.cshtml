@@ -1,0 +1,136 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"]</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap"
+          rel="stylesheet" />
+    <link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+</head>
+<body class="cairo-font">
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm position-fixed w-100 p-0">
+            <div class="container justify-content-between">
+                <a asp-action="Index" asp-controller="Home" class="navbar-brand order-0">عيادة</a>
+                <button class="navbar-toggler order-2"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target=".navbar-collapse"
+                        aria-controls="navbarSupportedContent"
+                        aria-expanded="false"
+                        aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-grow-0 order-1">
+                    <ul class="navbar-nav flex-grow-1 flex-wrap">
+                        <li class="nav-item">
+                            <a asp-action="Index" asp-controller="Home" class="nav-link">الرئيسية</a>
+                        </li>
+
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle"
+                               href="#"
+                               id="navbarDropdownMenuLink"
+                               role="button"
+                               data-bs-toggle="dropdown"
+                               aria-expanded="false">
+                                خدماتنا
+                            </a>
+                            <ul class="dropdown-menu text-center"
+                                aria-labelledby="navbarDropdownMenuLink">
+                                <li><a class="dropdown-item" href="#">خدمة 1</a></li>
+                                <li><a class="dropdown-item" href="#">خدمة 2</a></li>
+                                <li><a class="dropdown-item" href="#">خدمة 3</a></li>
+                                <li><a class="dropdown-item" href="#">جميع الخدمات</a></li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link">مقالات</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link">من نحن</a>
+                        </li>
+                    </ul>
+                </div>
+                <a class="book-now" asp-action="Book" asp-controller="Home">إحجز موعد</a>
+            </div>
+        </nav>
+    </header>
+    @RenderBody()
+    <footer class="pt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-6 col-lg-4 mb-3">
+                    <div>
+                        <h3>روابط سريعة</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-1"><a asp-action="Index" asp-controller="Home">الرئيسية</a></li>
+                            <li class="mb-1"><a href="">من نحن</a></li>
+                            <li class="mb-1"><a href="">خدماتنا</a></li>
+                            <li class="mb-1"><a href="">مقالات</a></li>
+                            <li class="mb-1"><a asp-action="Book" asp-controller="Home">حجز موعد</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4">
+                    <div>
+                        <h3>حساباتنا</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-1">
+                                <a href="" class="d-flex align-items-center w-25">
+                                    فيسبوك
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="" class="d-flex align-items-center w-25">
+                                    تويتر
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="" class="d-flex align-items-center w-25">
+                                    انستجرام
+                                </a>
+                            </li>
+                            <li class="mb-1">
+                                <a href="" class="d-flex align-items-center w-25">
+                                    يوتيوب
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-6 col-lg-4 col-xl-3">
+                    <div>
+                        <h3>تواصل معنا</h3>
+                        <ul class="list-unstyled">
+                            <li class="mb-1">
+                                <h4>العنوان</h4>
+                                <p>--شارع , المنصورة , بجوار</p>
+                            </li>
+                            <li class="mb-1">
+                                <h4>أرقامنا</h4>
+                                <p>--00000000000</p>
+                                <p>--10000000000</p>
+                            </li>
+                            <li class="mb-1">
+                                <h4>مواعيدنا</h4>
+                                <p>--من الأحد إلى الخميس</p>
+                                <p>--الجمعة والسبت اجازة</p>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script src="/lib/jquery/dist/jquery.min.js"></script>
+    <script src="/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

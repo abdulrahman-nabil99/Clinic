@@ -1,0 +1,68 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - عيادة</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="wrapper">
+        <!-- Sidebar -->
+        <div class="sidebar" id="sidebar">
+            <a class="close-btn btn btn-warning d-lg-none" id="closeSidebar">&times;</a>
+            <h4 class="text-center">عيادة</h4>
+            <a asp-action="Index" asp-controller="Dashboard">الرئيسية</a>
+            <div class="mb-0">
+                <a class="mx-0 rounded" data-bs-toggle="collapse" data-bs-target="#admin-collapse" aria-expanded="true">
+                    المستخدمين
+                </a>
+                <div class="collapse show" id="admin-collapse" style="">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li><a asp-action="Doctors" asp-controller="Dashboard">الأطباء</a></li>
+                        <li><a asp-action="Receptionists" asp-controller="Dashboard">موظفين الإستقبال</a></li>
+                        <li><a asp-action="NewUser" asp-controller="Dashboard">إضافة مستخدم</a></li>
+                    </ul>
+                </div>
+            </div>
+            <a asp-action="Appointments" asp-controller="Dashboard">الحجوزات</a>
+            <a asp-action="Patients" asp-controller="Dashboard">المرضى</a>
+            <a asp-action="Articles" asp-controller="Dashboard">المقالات</a>
+        </div>
+
+        <!-- Content -->
+        <div class="content">
+            <!-- Topbar -->
+            <div class="topbar d-flex justify-content-between align-items-center">
+                <h4>@ViewData["Title"]</h4>
+                <button class="btn btn-primary d-lg-none" id="toggleSidebar">☰</button>
+                <input type="text" class="form-control search-bar d-md-block" placeholder="إبحث....">
+            </div>
+
+
+            <!-- Main Content -->
+            <main role="main" class="p-3">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Toggle sidebar on button click
+        document.getElementById('toggleSidebar').addEventListener('click', function () {
+            const wrapper = document.querySelector('.wrapper');
+            wrapper.classList.toggle('fullscreen');
+        });
+
+        // Close sidebar on button click
+        document.getElementById('closeSidebar').addEventListener('click', function () {
+            const wrapper = document.querySelector('.wrapper');
+            wrapper.classList.remove('fullscreen');
+        });
+    </script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

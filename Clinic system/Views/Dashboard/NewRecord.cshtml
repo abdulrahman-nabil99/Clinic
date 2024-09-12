@@ -1,0 +1,44 @@
+﻿@model MedicalRecord
+@{
+    Appointment appointment = ViewBag.Appointment;
+    Patient? patient = appointment.Patient;
+    var date = appointment.AppointmentDate.Date.ToString("D", new CultureInfo("ar-EG"));
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = $"إضافة تقرير طبي ل{patient?.FullName}";
+}
+
+<form method="post" class="bg-info text-dark  p-5">
+    <h2 class="text-center text-success">إضافة تقرير طبي لـ @patient.FullName</h2>
+    <div asp-validation-summary="ModelOnly"></div>
+    <input asp-for="PatientId" hidden value="@patient.PatientId" class="form-control" />
+    <input asp-for="AppointmentId" hidden value="@appointment.AppointmentId" class="form-control" />
+
+    <div class="row mb-3 mx-0 justify-content-center">
+        <div class="col-12 mb-3">
+            <label for="pName" class="fw-bold d-block form-label mt-3">إسم المريض</label>
+            <input id="pName" type="text" readonly class="form-control-plaintext" value="@patient.FullName" />
+        </div>
+        <div class="col-12 mb-3">
+            <label for="appDate" class="fw-bold d-block form-label mt-3">تاريخ الكشف</label>
+            <input id="appDate" type="text" readonly class="form-control-plaintext" value="@date" />
+        </div>
+        <div class="col-12 mb-3">
+            <label asp-for="Diagnosis" class="fw-bold d-block form-label mt-3">تشخيص المريض</label>
+            <textarea asp-for="Diagnosis" rows="5" class="form-control" style="resize: none;"></textarea>
+            <span asp-validation-for="Diagnosis"></span>
+        </div>
+        <div class="col-12 mb-3">
+            <label asp-for="Treatment" class="fw-bold d-block form-label mt-3">العلاج الموصوف</label>
+            <textarea asp-for="Treatment" rows="5" class="form-control" style="resize: none;"></textarea>
+            <span asp-validation-for="Treatment"></span>
+        </div>
+    </div>
+
+    <div class="mt-2 d-flex justify-content-end gap-3">
+        <input type="submit" value="إضافة التقرير" class="btn btn-success d-inline-block  px-3" />
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

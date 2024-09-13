@@ -1,3 +1,4 @@
+using Clinic_system.Helpers;
 using Clinic_system.Models;
 using Clinic_system.Services;
 using Clinic_system.ViewModels;
@@ -12,14 +13,25 @@ namespace Clinic_system.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly IGenericService<Service> _servicesService;
         private readonly IPatientService _patientService;
-        private readonly IGenericService<Appointment> _appointmentService;
+        private readonly IAppointmentService _appointmentService;
+        private readonly IGenericService<Inquiry> _inquiryService;
+        private readonly GenericHelpers _genericHelpers;
 
-        public HomeController(ILogger<HomeController> logger, IPatientService patientService, IGenericService<Service> servicesService, IGenericService<Appointment> appointmentService)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IPatientService patientService,
+            IGenericService<Service> servicesService,
+            IAppointmentService appointmentService,
+            IGenericService<Inquiry> inquiryService,
+            GenericHelpers genericHelpers
+            )
         {
             _logger = logger;
             _servicesService = servicesService;
             _patientService = patientService;
             _appointmentService = appointmentService;
+            _inquiryService = inquiryService;
+            _genericHelpers = genericHelpers;
         }
 
         public IActionResult Index()
@@ -49,33 +61,37 @@ namespace Clinic_system.Controllers
         [HttpPost]
         public async Task<IActionResult> Book(BookViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Book", "Home");
+            }
+
+            if (_genericHelpers.HasExceededRequestLimit("Book",HttpContext))
+            {
+                return BadRequest("You have reached the limit for sending inquiries for today.");
+            }
+
+            var patient = await _patientService.GetOrCreatePatientAsync(model);
+            var appointment = await _appointmentService.CreateAppointmentAsync(model, patient);
+
+            ViewBag.Number = appointment.AppointmentId;
+            ViewBag.Order = await _appointmentService.GetAppointmentOrderForDayAsync(model.Date);
+
+            return View("SuccessBooking");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> NewInquiry(Inquiry inquiry)
+        {
+            if (_genericHelpers.HasExceededRequestLimit("Inquiry",HttpContext))
+            {
+                return BadRequest("You have reached the limit for sending inquiries for today.");
+            }
             if (ModelState.IsValid)
             {
-                var patient = await _patientService.GetPatientByPhoneAsync(model.Phone);
-                if (patient == null)
-                {
-                    patient = new Patient() 
-                    { 
-                        FullName = model.Name,
-                        PhoneNumber=model.Phone,
-                        Email = model.Email,
-                    };
-                    await _patientService.AddAsync(patient);
-                }
-                Appointment appointment = new Appointment()
-                {
-                    PatientId = patient.PatientId,
-                    AppointmentDate = model.Date,
-                    ServiceId = model.ServiceId,
-                };
-                await _appointmentService.AddAsync(appointment);
-                ViewBag.Number = appointment.AppointmentId;
-                var dayAppointments = await _appointmentService.GetAllAsync();
-                ViewBag.Order = dayAppointments
-                    .Where(a => a.AppointmentDate.Date == model.Date && a.Status== AppointmentStatus.Booked).Count();
-                return View("SuccessBooking");
+                await _inquiryService.AddAsync(inquiry);
             }
-            return RedirectToAction("Book","Home");
+            return RedirectToAction("Index", "Home");
         }
     }
 }

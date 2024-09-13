@@ -1,7 +1,9 @@
 using Clinic_system.Data;
+using Clinic_system.Helpers;
 using Clinic_system.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace Clinic_system
 {
@@ -21,7 +23,10 @@ namespace Clinic_system
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IPatientService, PatientService>();
             builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<GenericHelpers>();
             builder.Services.AddSession(a => { });
+            builder.Services.AddMemoryCache();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(a =>
                 {

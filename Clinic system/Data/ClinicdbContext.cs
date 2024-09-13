@@ -14,6 +14,7 @@ namespace Clinic_system.Data
         public DbSet<Service> Services { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Article> Articles { get; set; }
+        public DbSet<Inquiry> Inquiries { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

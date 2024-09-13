@@ -1,0 +1,26 @@
+﻿@model Inquiry
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = "إجابة إستفسار";
+}
+
+<div class="container">
+    <div class="d-flex justify-content-around mb-2 flex-lg-row flex-column">
+        <h5> الإسم : <span>@Model.Name</span></h5>
+        <h5> الإيميل : <span>@Model.EmailAddress</span></h5>
+    </div>
+    <p class="text-center text-light rounded p-4 bg-dark fw-bold fs-5">@Model.Question</p>
+    <form asp-action="AddInquiryAnswer" asp-controller="Dashboard"  method="post">
+        <input asp-for="Id" hidden/>
+        <label class="form-label" asp-for="Answer">الإجابة:</label>
+        <textarea asp-for="Answer" class="form-control" required data-val-required="* مطلوب" rows="5" style="resize:none;"></textarea>
+        <span asp-validation-for="Answer"></span>
+        <div>
+            <input type="submit" class="btn btn-success mt-4 px-5 py-2" value="إرسال الإجابة"/>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

@@ -1,4 +1,5 @@
-﻿@{
+﻿@model Inquiry
+@{
     ViewData["Title"] = "الرئيسية";
 }
 
@@ -102,26 +103,24 @@
     <section id="contact-us">
       <div class="container">
         <h2 class="display-6 fw-bold lh-1 mb-3">تواصل معنا</h2>
-        <form action="/" method="post" class="">
+        <form asp-action="NewInquiry" asp-controller="Home" method="post" class="">
           <div class="form-floating">
-            <input
-              type="text"
+            <input asp-for="Name"
               class="form-control"
-              id="floatingInput"
-              placeholder="الإسم"
             />
-            <label for="floatingInput">اللإسم</label>
+            <label asp-for="Name" >اللإسم</label>
+            <span asp-validation-for="Name"></span>
           </div>
           <div class="form-floating">
-            <input
-              type="email"
+            <input asp-for="EmailAddress"
               class="form-control"
-              id="floatingInput"
-              placeholder="name@example.com"
             />
-            <label for="floatingInput">الإيميل</label>
+            <label asp-for="EmailAddress">الإيميل</label>
+            <span asp-validation-for="EmailAddress"></span>
           </div>
-          <textarea  rows="7" class="form-control" placeholder="أكتب إستفسارك هنا"></textarea>
+          <textarea asp-for="Question" rows="7" class="form-control" placeholder="أكتب إستفسارك هنا"></textarea>
+            <span asp-validation-for="Question"></span>
+
           <div class="d-flex justify-content-end w-100">
             <input type="submit" value="إرسال" class="btn btn-success mt-3 mb-5 py-2 px-5" />
           </div>
@@ -145,3 +144,7 @@
         </div>
       </div>
     </section>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

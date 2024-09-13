@@ -1,5 +1,6 @@
 /Clinic system/bin/
 /Clinic system/obj/
+/Clinic system/Migrations/
 /.vs/
 *.user
 *.suo

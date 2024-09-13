@@ -1,5 +1,6 @@
 ﻿using Clinic_system.Data;
 using Clinic_system.Models;
+using Clinic_system.ViewModels;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinic_system.Services
@@ -13,6 +14,21 @@ namespace Clinic_system.Services
         public async Task<Patient> GetPatientByPhoneAsync(string phone)
         {
             var patient = await _dbSet.FirstOrDefaultAsync(p => p.PhoneNumber == phone);
+            return patient;
+        }
+        public async Task<Patient> GetOrCreatePatientAsync(BookViewModel model)
+        {
+            var patient = await GetPatientByPhoneAsync(model.Phone);
+            if (patient == null)
+            {
+                patient = new Patient
+                {
+                    FullName = model.Name,
+                    PhoneNumber = model.Phone,
+                    Email = model.Email
+                };
+                await AddAsync(patient);
+            }
             return patient;
         }
     }

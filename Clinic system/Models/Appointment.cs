@@ -22,8 +22,6 @@ namespace Clinic_system.Models
         public AppointmentStatus Status { get; set; } = AppointmentStatus.Booked;// ===> تم الكشف | تم الإلغاء
 
         // Medical Record
-        public int? MedicalRecordId { get; set; }
-        [ForeignKey("MedicalRecordId")]
         public virtual MedicalRecord? MedicalRecord { get; set; }
 
         // Service

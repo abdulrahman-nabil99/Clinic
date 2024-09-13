@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Inquiry>
+@{
+    ViewData["Title"] = "الإستفسارات";
+    Layout = "_DashboardLayout";
+}
+<div class="row row-cols-1">
+    @if(Model.Count()>0 )
+    {
+        foreach(Inquiry inquiry in Model)
+        {
+            <div class="card mb-2">
+                <div class="card-body">
+                    <h5 class="card-title">@inquiry.Name</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">@inquiry.EmailAddress</h6>
+                    <p class="card-text">@inquiry.Question</p>
+                    @if(inquiry.IsAnswered){
+                        <p class="card-text">@inquiry.Answer</p>
+                    }
+                    <a asp-action="AddInquiryAnswer" asp-controller="Dashboard" asp-route-id="@inquiry.Id" class="btn btn-success">إجابة</a>
+                    <a asp-action="DeleteInquiry" asp-controller="Dashboard" asp-route-id="@inquiry.Id" class="btn btn-danger">الحذف</a>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <h2>لا يوجد إستفسارات لعرضها</h2>
+    }
+</div>

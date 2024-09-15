@@ -1,0 +1,29 @@
+﻿@model MedicalRecord
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "التقرير الطبي";
+}
+
+<div class="container" style="padding:25vh 0;">
+    <dl class="row row-cols-sm-2 row-cols-1" style="max-width:100%; overflow:hidden;">
+        <dt class="col-sm-3 col h5">الإسم</dt>
+        <dd class="col-sm-8 col">
+            <p class="h5">@Model.Patient.FullName</p>
+        </dd>
+
+        <dt class="col-sm-3 col h5">تاريخ الكشف</dt>
+        <dd class="col-sm-8 col">
+            <p class="h5">@Model.Appointment.AppointmentDate.Date.ToString("D", new CultureInfo("ar-EG"))</p>
+        </dd>
+
+        <dt class="col-sm-3 col h5">التشخيص</dt>
+        <dd class="col-sm-8 col">
+            <p class="h5">@Model.Diagnosis</p>
+        </dd>
+
+        <dt class="col-sm-3 col h5">العلاج</dt>
+        <dd class="col-sm-8 col">
+            <p class="h5">@Model.Treatment</p>
+        </dd>
+    </dl>
+</div>

@@ -24,8 +24,15 @@ namespace Clinic_system
             builder.Services.AddScoped<IPatientService, PatientService>();
             builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
-            builder.Services.AddScoped<GenericHelpers>();
-            builder.Services.AddSession(a => { });
+            builder.Services.AddScoped<RateLimiterHelper>();
+            builder.Services.AddScoped<OtpHelper>();
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(60); 
+                options.Cookie.HttpOnly = true; 
+                options.Cookie.IsEssential = true; 
+            });
+
             builder.Services.AddMemoryCache();
             builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
                 .AddCookie(a =>
@@ -47,6 +54,7 @@ namespace Clinic_system
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
             app.UseAuthentication();
             app.UseAuthorization();

@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Appointment>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "مواعيدي";
+}
+
+<div class="container" style="padding: 50px 0;">
+    <h2 class="text-center mb-3">حجوزاتي</h2>
+    @if(Model.Count()<=0)
+    {
+        <h2 class="text-center">لا يوجد لديك أي مواعيد مسجلة</h2>
+    }
+    else
+    {
+        <div class="row row-cols-xxl-4 row-cols-lg-2 align-items-center mx-auto" style="max-width:100%;">
+            @foreach (Appointment appointment in Model)
+            {
+                <div class="p-1" >
+                    <div class="card" style="height:195px">
+                        <div class="card-body">
+                            <h5 class="card-title mb-3">حجز رقم #@appointment.AppointmentId</h5>
+                            <h6 class="card-subtitle mb-2 text-muted">الخدمة: @appointment.Service.ServiceName</h6>
+                            @{
+                                var statusClass = appointment.Status switch
+                                {
+                                    AppointmentStatus.Checked => "text-success",
+                                    AppointmentStatus.Cancelled => "text-danger",
+                                    _ => ""
+                                };
+
+                                var statusText = appointment.Status switch
+                                {
+                                    AppointmentStatus.Booked => "تم الحجز",
+                                    AppointmentStatus.Cancelled => "تم الإلغاء",
+                                    _ => "تم الكشف"
+                                };
+                            }
+
+                            <h6 class="card-subtitle mb-2 text-muted">
+                                حالة الحجز:
+                                <span class="@statusClass">@statusText</span>
+                            </h6>                            <p class="card-text">تاريخ الحجز: @appointment.AppointmentDate.Date.ToString("D", new CultureInfo("ar-EG"))</p>
+                            @if(appointment.AppointmentDate - DateTime.Now >= TimeSpan.FromHours(12) && appointment.Status == AppointmentStatus.Booked)
+                            {
+                                <a asp-route-id="@appointment.AppointmentId" asp-action="UpdateMyAppointment"
+                                asp-controller="Home" class="card-link btn btn-warning">تعديل الحجز</a>
+                                <a asp-route-id="@appointment.AppointmentId" asp-action="CancelMyAppointment"
+                                asp-controller="Home" class="card-link btn btn-danger">إلغاء الحجز</a>
+                            }
+                            @if(appointment.Status==AppointmentStatus.Checked)
+                            {
+                                <a asp-route-id="@appointment.AppointmentId" asp-action="MyRecords" asp-controller="Home"
+                                class="card-link btn btn-success">عرض تقرير الطبيب</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+</div>

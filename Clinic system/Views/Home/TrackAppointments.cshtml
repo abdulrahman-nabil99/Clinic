@@ -1,0 +1,28 @@
+﻿@model TrackViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "متابعة حجوزاتي";
+}
+
+<div class="container d-flex flex-column align-items-center" style="padding:20vh 0">
+    <h2>الرجاء إكمال البيانات المطلوبة</h2>
+    <form method="post" style="max-width:400px; margin: 20px 0">
+        <div class="form-floating mb-3">
+            <input asp-for="PhoneNumber" class="form-control" placeholder="">
+            <label asp-for="PhoneNumber">رقم الهاتف المسجل</label>
+            <span asp-validation-for="PhoneNumber"></span>
+        </div>
+        <div class="form-floating">
+            <input asp-for="EmailAddress" class="form-control" placeholder="">
+            <label asp-for="EmailAddress">الإيميل المسجل</label>
+            <span asp-validation-for="EmailAddress"></span>
+        </div>
+        <div class="bg-info text-black my-3">الرجاء التأكد من البيانات, سيتم إرسال رقم التأكيد إلى اللإيميل</div>
+        <div asp-validation-summary="ModelOnly" class="mb-2"></div>
+        <input type="submit" class="btn btn-success" value="إرسال" />
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

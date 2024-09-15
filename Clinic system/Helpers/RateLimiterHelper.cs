@@ -2,11 +2,11 @@
 
 namespace Clinic_system.Helpers
 {
-    public class GenericHelpers
+    public class RateLimiterHelper
     {
         private readonly IMemoryCache _cache;
 
-        public GenericHelpers(IMemoryCache cache)
+        public RateLimiterHelper(IMemoryCache cache)
         {
             _cache = cache;
         }

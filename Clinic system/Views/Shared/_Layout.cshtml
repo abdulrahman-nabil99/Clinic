@@ -13,7 +13,7 @@
 </head>
 <body class="cairo-font">
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm position-fixed w-100 p-0">
+        <nav class="navbar navbar-expand-md navbar-toggleable-md position-fixed w-100 p-0">
             <div class="container justify-content-between">
                 <a asp-action="Index" asp-controller="Home" class="navbar-brand order-0">عيادة</a>
                 <button class="navbar-toggler order-2"
@@ -25,32 +25,23 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between flex-grow-0 order-1">
+                <div class="navbar-collapse collapse d-md-inline-flex justify-content-between flex-grow-0 order-1">
                     <ul class="navbar-nav flex-grow-1 flex-wrap">
                         <li class="nav-item">
                             <a asp-action="Index" asp-controller="Home" class="nav-link">الرئيسية</a>
                         </li>
 
-                        <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle"
-                               href="#"
-                               id="navbarDropdownMenuLink"
-                               role="button"
-                               data-bs-toggle="dropdown"
-                               aria-expanded="false">
-                                خدماتنا
-                            </a>
-                            <ul class="dropdown-menu text-center"
-                                aria-labelledby="navbarDropdownMenuLink">
-                                <li><a class="dropdown-item" href="#">خدمة 1</a></li>
-                                <li><a class="dropdown-item" href="#">خدمة 2</a></li>
-                                <li><a class="dropdown-item" href="#">خدمة 3</a></li>
-                                <li><a class="dropdown-item" href="#">جميع الخدمات</a></li>
-                            </ul>
+                        <li class="nav-item">
+                            <a class="nav-link">خدماتنا</a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link">مقالات</a>
+                        </li>
+
+
+                        <li class="nav-item">
+                            <a asp-action="TrackAppointments" asp-controller="Home" class="nav-link">متابعة حجوزاتك</a>
                         </li>
 
                         <li class="nav-item">
@@ -62,7 +53,9 @@
             </div>
         </nav>
     </header>
-    @RenderBody()
+    <main>
+        @RenderBody()
+    </main>
     <footer class="pt-5">
         <div class="container">
             <div class="row">

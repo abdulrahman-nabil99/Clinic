@@ -8,14 +8,15 @@ using System.Diagnostics;
 
 namespace Clinic_system.Controllers
 {
-    public class HomeController : Controller
+    public partial class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IGenericService<Service> _servicesService;
         private readonly IPatientService _patientService;
         private readonly IAppointmentService _appointmentService;
         private readonly IGenericService<Inquiry> _inquiryService;
-        private readonly GenericHelpers _genericHelpers;
+        private readonly RateLimiterHelper _rateLimiterHelper;
+        private readonly OtpHelper _otpHelper;
 
         public HomeController(
             ILogger<HomeController> logger,
@@ -23,7 +24,8 @@ namespace Clinic_system.Controllers
             IGenericService<Service> servicesService,
             IAppointmentService appointmentService,
             IGenericService<Inquiry> inquiryService,
-            GenericHelpers genericHelpers
+            RateLimiterHelper rateLimiterHelper,
+            OtpHelper otpHelper
             )
         {
             _logger = logger;
@@ -31,7 +33,8 @@ namespace Clinic_system.Controllers
             _patientService = patientService;
             _appointmentService = appointmentService;
             _inquiryService = inquiryService;
-            _genericHelpers = genericHelpers;
+            _rateLimiterHelper = rateLimiterHelper;
+            _otpHelper = otpHelper;
         }
 
         public IActionResult Index()
@@ -66,7 +69,7 @@ namespace Clinic_system.Controllers
                 return RedirectToAction("Book", "Home");
             }
 
-            if (_genericHelpers.HasExceededRequestLimit("Book",HttpContext))
+            if (_rateLimiterHelper.HasExceededRequestLimit("Book", HttpContext))
             {
                 return BadRequest("You have reached the limit for sending inquiries for today.");
             }
@@ -83,7 +86,7 @@ namespace Clinic_system.Controllers
         [HttpPost]
         public async Task<IActionResult> NewInquiry(Inquiry inquiry)
         {
-            if (_genericHelpers.HasExceededRequestLimit("Inquiry",HttpContext))
+            if (_rateLimiterHelper.HasExceededRequestLimit("Inquiry", HttpContext))
             {
                 return BadRequest("You have reached the limit for sending inquiries for today.");
             }
@@ -93,5 +96,6 @@ namespace Clinic_system.Controllers
             }
             return RedirectToAction("Index", "Home");
         }
+
     }
 }

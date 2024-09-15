@@ -49,8 +49,8 @@ namespace Clinic_system.Controllers
                     cp.AddClaims([
                         new (ClaimTypes.Name, account.FullName),
                         new (ClaimTypes.Role, account.Role.RoleName ?? "Patient"),
-                        new ("Email", account.Email),
-                        new ("id",account.UserId.ToString()),
+                        new (ClaimTypes.Email, account.Email),
+                        new (ClaimTypes.NameIdentifier,account.UserId.ToString()),
                         ]);
 
                     var user = new ClaimsPrincipal(cp);

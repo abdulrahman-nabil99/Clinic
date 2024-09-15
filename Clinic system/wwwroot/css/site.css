@@ -39,8 +39,8 @@ nav a:hover {
   background-color: #343a40;
 }
 
-body > .container {
-  margin-top: 70px;
+body > main {
+  margin-top: 66px;
 }
 
 .navbar-toggler-icon {
@@ -196,7 +196,7 @@ footer ul a:hover {
   }
 }
 
-@media (max-width: 576px) {
+@media (max-width: 767px) {
   .navbar-collapse {
     order: 2 !important;
   }

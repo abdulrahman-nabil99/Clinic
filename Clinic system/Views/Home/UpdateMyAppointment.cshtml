@@ -1,0 +1,38 @@
+﻿@model BookViewModel
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "تعديل حجز";
+    var year = DateTime.Now.Year;
+    var month = DateTime.Now.Month;
+    var day = DateTime.Now.Hour > 16 ? DateTime.Now.Day + 1 : DateTime.Now.Day;
+}
+
+<div class="container" style="padding:50px 0 ;">
+    <form method="post" style="max-width:400px; margin: 20px 0">
+        <input asp-for="Name" hidden />
+        <input asp-for="Email" hidden />
+        <input asp-for="Phone" hidden />
+
+        <div class="row mb-3 mx-0 justify-content-center">
+            <div class="col-12">
+                <label asp-for="Date" class="fw-bold d-block form-label mt-3">التاريخ</label>
+                <input asp-for="Date" class="form-control" min="@($"{year}-{month:D2}-{day:D2}")" />
+                <span asp-validation-for="Date"></span>
+            </div>
+            <div class="col-12">
+                <label asp-for="ServiceId" class="fw-bold d-block form-label mt-3">الخدمة</label>
+                <select asp-for="ServiceId" class="form-select" asp-items="@ViewBag.Services">
+                    <option value="" selected>إختر ...</option>
+                </select>
+                <span asp-validation-for="ServiceId"></span>
+            </div>
+        </div>
+
+        <div class="mt-2">
+            <input type="submit" value="تعديل" class="btn btn-success" />
+        </div>
+    </form>
+</div>
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

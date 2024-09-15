@@ -1,0 +1,15 @@
+﻿@{
+    Layout = "_Layout";
+    ViewData["Title"] = "إلغاء حجز";
+}
+
+<div class="container" style="padding:50px 0 ;">
+    <form method="post" style="max-width:600px; margin: 20px auto">
+        <h2 >هل أنت متأكد من إلغاء حجزك رقم #@ViewBag.AppointmentNumber؟</h2>
+        <input name="AppointmentId" value="@ViewBag.AppointmentNumber" hidden />
+        <div class="d-flex justify-content-center">
+            <input type="submit" value="نعم" class="btn btn-danger px-4 py-2 ms-3" />
+            <a asp-action="MyAppointments" asp-controller="Home" class="btn btn-warning px-4 py-2">لا</a>
+        </div>
+    </form>
+</div>

@@ -3,7 +3,9 @@ using Clinic_system.Helpers;
 using Clinic_system.Services;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Caching.Memory;
+using Clinic_system.Helpers.JobSchedule;
+using Quartz;
+
 
 namespace Clinic_system
 {
@@ -13,14 +15,38 @@ namespace Clinic_system
         {
             var builder = WebApplication.CreateBuilder(args);
             string connString = builder.Configuration.GetConnectionString("Main");
+
             // Add services to the container.
             builder.Services.AddControllersWithViews();
+
+            // Add Quartz services
+            builder.Services.AddQuartz(q =>
+            {
+                // Use the Microsoft Dependency Injection (DI) job factory
+                q.UseMicrosoftDependencyInjectionJobFactory();
+
+                // Register the job with a unique key
+                var jobKey = new JobKey("AppointmentReminderJob");
+                q.AddJob<AppointmentReminderJob>(opts => opts.WithIdentity(jobKey));
+
+                // Schedule the job to run daily at 8:00 AM
+                q.AddTrigger(opts => opts
+                    .ForJob(jobKey)
+                    .WithIdentity("AppointmentReminderTrigger")
+                    .WithCronSchedule("0 0 0 * * ?")); // Runs daily at 12:00 AM
+                    //.WithCronSchedule("0 * * * * ?")); // Runs every minute
+            });
+            // Add Quartz hosted service for background jobs
+            builder.Services.AddQuartzHostedService(q => q.WaitForJobsToComplete = true);
+
+
             builder.Services.AddDbContext<ClinicdbContext>(options =>
             {
                 options.UseLazyLoadingProxies().UseSqlServer(connString);
             });
             builder.Services.AddScoped(typeof(IGenericService<>), typeof(GenericService<>));
             builder.Services.AddScoped<IUserService, UserService>();
+            builder.Services.AddScoped<IAppointmentService, AppointmentService>();
             builder.Services.AddScoped<IPatientService, PatientService>();
             builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();

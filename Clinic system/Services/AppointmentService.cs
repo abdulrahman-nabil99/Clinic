@@ -28,5 +28,18 @@ namespace Clinic_system.Services
                 .Where(a => a.AppointmentDate.Date == date && a.Status == AppointmentStatus.Booked)
                 .Count();
         }
+
+        public async Task<IEnumerable<Appointment>> GetAppointmentToNotifyAsync(DateTime date)
+        {
+            var dayAppointments = await GetAllAsync();
+            return dayAppointments
+                .Where(a => a.AppointmentDate.Date == date && a.Status == AppointmentStatus.Booked && !a.NotificationSent);
+        }
+
+        public async Task Notify(Appointment appointment)
+        {
+            appointment.NotificationSent = true;
+            await SaveChangesAsync();
+        }
     }
 }

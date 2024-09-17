@@ -7,5 +7,8 @@ namespace Clinic_system.Services
     {
         Task<Appointment> CreateAppointmentAsync(BookViewModel model, Patient patient);
         Task<int> GetAppointmentOrderForDayAsync(DateTime date);
+        Task<IEnumerable<Appointment>> GetAppointmentToNotifyAsync(DateTime date);
+        Task Notify(Appointment appointment);
+
     }
 }

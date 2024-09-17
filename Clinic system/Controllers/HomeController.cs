@@ -77,8 +77,21 @@ namespace Clinic_system.Controllers
             var patient = await _patientService.GetOrCreatePatientAsync(model);
             var appointment = await _appointmentService.CreateAppointmentAsync(model, patient);
 
-            ViewBag.Number = appointment.AppointmentId;
-            ViewBag.Order = await _appointmentService.GetAppointmentOrderForDayAsync(model.Date);
+            var order = await _appointmentService.GetAppointmentOrderForDayAsync(model.Date);
+
+            //Send booking email
+            try
+            {
+                string body = $"<h2> „  ”ÃÌ· ÕÃ“ﬂ »‰Ã«Õ</h2>" +
+                    $"<p>—ﬁ„ ÕÃ“ﬂ ÂÊ : {appointment.AppointmentId}</p>" +
+                    $"<p> — Ì»ﬂ : {order}</p>";
+                await EmailHelper.SendEmailAsync(model.Email, " „  √ﬂÌœ «·ÕÃ“", body);
+                ViewBag.Message = " „  ”ÃÌ· «·ÕÃ“ »‰Ã«Õ,  „ ≈—”«· »Ì«‰«  «·ÕÃ“ ≈·Ï «·≈Ì„Ì· «·Œ«’ »ﬂ";
+            }
+            catch
+            {
+                ViewBag.Message = "«·«Ì„Ì· «·„œŒ· €Ì— ’ÕÌÕ";
+            }
 
             return View("SuccessBooking");
         }

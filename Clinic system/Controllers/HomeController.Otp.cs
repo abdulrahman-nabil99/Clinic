@@ -41,7 +41,10 @@ namespace Clinic_system.Controllers
             var otp = _otpHelper.GenerateOtp(model.PhoneNumber);
 
             // Send Otp to email 
-            Debug.WriteLine(otp);
+            string body = $"<h2>ÑŞã ÊÃßíÏ ÇáÏÎæá áãÊÇÈÚÉ ÍÌæÒÇÊß</h2>" +
+                $"<p>ÓÊäÊåí ÕáÇÍíÉ ÇáÑŞã ÈÚÏ ãÑæÑ 30 ÏŞíŞíÉ</p>" +
+                $"<p>ÑŞã ÇáÊÃßíÏ : {otp}</p>";
+            await EmailHelper.SendEmailAsync(patient.Email, "ÑŞã ÊÃßíÏ ÇáÏÎæá", body);
             return View("VerifyOtp", model);
         }
 

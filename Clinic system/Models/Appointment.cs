@@ -28,5 +28,8 @@ namespace Clinic_system.Models
         public int ServiceId { get; set; }
         [ForeignKey("ServiceId")]
         public virtual Service? Service { get; set; }
+
+        //for email notification
+        public bool NotificationSent {  get; set; } = false;
     }
 }

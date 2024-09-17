@@ -1,4 +1,5 @@
-﻿using Clinic_system.Models;
+﻿using Clinic_system.Helpers;
+using Clinic_system.Models;
 using Clinic_system.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -33,8 +34,10 @@ namespace Clinic_system.Controllers
                 inquiry.IsAnswered = true;
                 inquiry.Answer = model.Answer;
                 await _inquiryService.UpdateAsync(inquiry);
+                string body = $"<h2>{inquiry.Question}</h2><p>{inquiry.Answer}</p>";
+                await EmailHelper.SendEmailAsync(inquiry.EmailAddress, "اجابة استفساراتكم", body);
             }
-
+            
             return RedirectToAction("Inquiries", "Dashboard");
         }
 

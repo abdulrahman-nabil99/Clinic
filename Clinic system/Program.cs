@@ -48,8 +48,9 @@ namespace Clinic_system
             builder.Services.AddScoped<IUserService, UserService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
             builder.Services.AddScoped<IPatientService, PatientService>();
-            builder.Services.AddScoped<IArticleService, ArticleService>();
             builder.Services.AddScoped<IAppointmentService, AppointmentService>();
+            builder.Services.AddScoped<IArticleService, ArticleService>();
+            builder.Services.AddScoped<IServiceService, ServiceService>();
             builder.Services.AddScoped<RateLimiterHelper>();
             builder.Services.AddScoped<OtpHelper>();
             builder.Services.AddSession(options =>

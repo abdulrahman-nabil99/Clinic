@@ -22,9 +22,14 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="wwwroot\imgs\icons\" />
     <Folder Include="wwwroot\imgs\thumbnails\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Update="wwwroot\data\details.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Article>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "ألمقالات";
+}
+
+<div class="container">
+    @if (Model.Count() > 0)
+    {
+        <div class="row row-cols-xxl-3 row-cols-lg-2 row-cols-sm-1">
+            @foreach (Article article in Model)
+            {
+                <div style="padding:20px 10px">
+                    <div class="card text-center" style="height:100%;">
+                        <img src="@($"/imgs/thumbnails/{article.Thumbnail}")" class="card-img-top" alt="@article.Title">
+                        <div class="card-body">
+                            <h5 class="card-title">@article.Title</h5>
+                            <a asp-action="Article" asp-controller="Home" asp-route-id="@article.Id" class="btn btn-primary">أكمل القراءة</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h2 class="text-warning">لا يوجد مقالات لعرضها</h2>
+    }
+</div>

@@ -1,13 +1,24 @@
 ﻿@model IEnumerable<Patient>
 @{
+
     ViewData["Title"] = "المرضى";
     Layout = "_DashboardLayout";
+    string id = "";
+    string name = "";
+    string sortedBy = ViewBag.SortedBy is { } ? @ViewBag.SortedBy : "";
+
+    if (sortedBy == "id")
+        id = sortedBy;
+    else if (sortedBy == "name")
+        name = sortedBy;
 }
+
+
 <table class="table table-bordered table-hover">
     <thead>
         <tr class="bg-light">
-            <th>رقم المريض</th>
-            <th>الإسم</th>
+            <th><a asp-action="Patients" asp-controller="Dashboard" asp-route-sort="id" asp-route-sortedBy="@id">رقم المريض</a></th>
+            <th><a asp-action="Patients" asp-controller="Dashboard" asp-route-sort="name" asp-route-sortedBy="@name">الإسم</a></th>
             <th>رقم الهاتف</th>
             <th>الإيميل</th>
             <th>الزيارات</th>
@@ -30,7 +41,7 @@
                     <td>@patient.FullName</td>
                     <td>@patient.PhoneNumber</td>
                     <td>@patient.Email</td>
-                    <td>@patient.Appointments.Count</td>
+                    <td>@patient.Appointments.Where(ap=>ap.Status == AppointmentStatus.Checked).Count()</td>
                     <td>
                         <a asp-action="PatientRecords" asp-controller="Dashboard" asp-route-id="@patient.PatientId" class="btn btn-info">التاريخ الطبي</a>
                     </td>

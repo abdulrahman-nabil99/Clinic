@@ -1,4 +1,5 @@
-﻿using Clinic_system.Models;
+﻿using Clinic_system.Helpers;
+using Clinic_system.Models;
 using Clinic_system.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,7 +25,7 @@ namespace Clinic_system.Controllers
             {
                 await _articleService.AddAsync(article);
                 if (img != null)
-                    await _articleService.UpdateThumbnail(article, img);
+                    await _articleService.UpdateImage(article, img);
             }
             return RedirectToAction("Articles", "Dashboard");
         }
@@ -49,7 +50,7 @@ namespace Clinic_system.Controllers
             {
                 await _articleService.UpdateAsync(article);
                 if (img != null)
-                    await _articleService.UpdateThumbnail(article, img);
+                    await _articleService.UpdateImage(article, img);
             }
             return RedirectToAction("Articles", "Dashboard");
         }
@@ -80,7 +81,8 @@ namespace Clinic_system.Controllers
                 var article = await _articleService.GetByIdAsync(id);
                 if (article is { })
                 {
-                    _articleService.DeleteThumbnail(article.Thumbnail);
+                    if (article.Thumbnail != "default.png")
+                        _articleService.DeleteImage(article);
                     await _articleService.DeleteAsync(article);
                 }
             }

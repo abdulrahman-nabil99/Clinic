@@ -5,27 +5,30 @@ using Clinic_system.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Diagnostics;
+using System.Globalization;
 
 namespace Clinic_system.Controllers
 {
     public partial class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IGenericService<Service> _servicesService;
+        private readonly IServiceService _servicesService;
         private readonly IPatientService _patientService;
         private readonly IAppointmentService _appointmentService;
         private readonly IGenericService<Inquiry> _inquiryService;
+        private readonly IArticleService _articleService;
         private readonly RateLimiterHelper _rateLimiterHelper;
         private readonly OtpHelper _otpHelper;
 
         public HomeController(
             ILogger<HomeController> logger,
             IPatientService patientService,
-            IGenericService<Service> servicesService,
+            IServiceService servicesService,
             IAppointmentService appointmentService,
             IGenericService<Inquiry> inquiryService,
             RateLimiterHelper rateLimiterHelper,
-            OtpHelper otpHelper
+            OtpHelper otpHelper,
+            IArticleService articleService
             )
         {
             _logger = logger;
@@ -33,12 +36,15 @@ namespace Clinic_system.Controllers
             _patientService = patientService;
             _appointmentService = appointmentService;
             _inquiryService = inquiryService;
+            _articleService = articleService;
             _rateLimiterHelper = rateLimiterHelper;
             _otpHelper = otpHelper;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var services = await _servicesService.GetAllAsync();
+            ViewBag.Services = services.Take(6);
             return View();
         }
 
@@ -53,10 +59,14 @@ namespace Clinic_system.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        public IActionResult AboutUs()
+        {
+            return View();
+        }
         [HttpGet]
         public async Task<IActionResult> Book()
         {
-            var services = await _servicesService.GetAllAsync();
+            var services = await _servicesService.GetAllActiveServicesAsync();
             ViewBag.Services = new SelectList(services, "ServiceId", "ServiceName");
             return View();
         }
@@ -84,7 +94,8 @@ namespace Clinic_system.Controllers
             {
                 string body = $"<h2> „  ”ÃÌ· ÕÃ“ﬂ »‰Ã«Õ</h2>" +
                     $"<p>—ﬁ„ ÕÃ“ﬂ ÂÊ : {appointment.AppointmentId}</p>" +
-                    $"<p> — Ì»ﬂ : {order}</p>";
+                    $"<p> — Ì»ﬂ : {order}</p>" +
+                    $"<p>«· «—ÌŒ : {appointment.AppointmentDate.Date.ToString("D", new CultureInfo("ar-EG"))}</p>";
                 await EmailHelper.SendEmailAsync(model.Email, " „  √ﬂÌœ «·ÕÃ“", body);
                 ViewBag.Message = " „  ”ÃÌ· «·ÕÃ“ »‰Ã«Õ,  „ ≈—”«· »Ì«‰«  «·ÕÃ“ ≈·Ï «·≈Ì„Ì· «·Œ«’ »ﬂ";
             }
@@ -110,5 +121,24 @@ namespace Clinic_system.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        [HttpGet]
+        public async Task<IActionResult> Services()
+        {
+            var services = await _servicesService.GetAllActiveServicesAsync();
+            return View(services);
+        }
+
+        public async Task<IActionResult> Articles()
+        {
+            var articles = await _articleService.GetAllAsync();
+            return View(articles);
+        }
+        public async Task<IActionResult> Article(int id)
+        {
+            var article = await _articleService.GetByIdAsync(id);
+            if (article is { })
+                return View(article);
+            return RedirectToAction("Articles", "Home");
+        }
     }
 }

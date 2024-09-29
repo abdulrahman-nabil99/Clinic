@@ -1,4 +1,5 @@
 ﻿using Clinic_system.Data;
+using Clinic_system.Helpers;
 using Clinic_system.Models;
 
 namespace Clinic_system.Services
@@ -9,32 +10,20 @@ namespace Clinic_system.Services
         {
         }
 
-        public async Task UpdateThumbnail(Article article,IFormFile img)
+        public async Task UpdateImage(Article article, IFormFile file)
         {
-            string[] ext = { "jpg", "png", "jpeg", "gif" };
-            var extension = img.FileName.Split('.').Last().ToLower();
-            if (!ext.Contains(extension)) return;
-            var fileName = $"article-{article.Id}-thumbnail.{extension}";
-            if (article.Thumbnail != "default.png")
-            {
-                DeleteThumbnail(article.Thumbnail);
-            }
-            using (FileStream file = new($"wwwroot/imgs/thumbnails/{fileName}", FileMode.Create))
-            {
-                await img.CopyToAsync(file);
-            }
-            article.Thumbnail = fileName;
+            if (!article.Thumbnail.Contains("default"))
+                DeleteImage(article);
+            var image = await ImageUploadHelper
+                .UploadImage(file, "thumbnails", $"article-{article.Id}-thumbnail");
+            article.Thumbnail = image;
             await UpdateAsync(article);
-            return;
         }
-        public void DeleteThumbnail(string img)
+
+        public void DeleteImage(Article article)
         {
-            var filePath = Path.Combine("wwwroot/imgs/thumbnails/", img);
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
-            return;
+            ImageUploadHelper.DeleteImage("thumbnails", article.Thumbnail);
         }
+
     }
 }

@@ -1,0 +1,106 @@
+﻿@using Newtonsoft.Json
+@{
+    ViewData["Title"] = "AboutUs";
+    Layout = "_Layout";
+    string jsonFilePath = "wwwroot/data/details.json";
+    DataModel? data;
+
+    using (StreamReader reader = new StreamReader(jsonFilePath))
+    {
+        string json = reader.ReadToEnd();
+        data = JsonConvert.DeserializeObject<DataModel>(json);
+    }
+}
+<div class="container" style="padding:30px 0">
+    <div class="fs-6 d-flex flex-column p-2">
+        <img id="about-img" src="/imgs/about.jpg"/>
+        <h2 class="mb-1">من نحن</h2>
+        <p class="mb-3 h5">
+            مرحبًا بكم في عيادة الدوكتور عبدالرحمن،
+            حيث نقدم لكم أفضل رعاية طبية للأسنان باستخدام أحدث التقنيات والممارسات الطبية.
+        </p>
+
+        <p class="mb-1 h5">
+        نحن نؤمن بأن الابتسامة الصحية هي أساس الثقة بالنفس والجمال الطبيعي.
+        في عيادتنا، نقدم مجموعة متكاملة من الخدمات الطبية التي تشمل:
+        </p >
+        <ul class="mb-3 fw-bold">
+            <li>تنظيف وتبييض الأسنان</li>
+            <li>تركيبات الأسنان</li>
+            <li>
+                علاج تسوس الأسنان وحشوات تجميلية
+            </li>
+            <li>تقويم الأسنان</li>
+            <li>علاج اللثة</li>
+        </ul>
+
+        <p class="mb-3 h5">
+            نحن فريق من الأطباء المتخصصين الذين يضعون مصلحة المريض أولاً،
+            ونسعى دائماً لتقديم تجربة علاجية مريحة وآمنة.
+        </p>
+
+        <h2 class="mb-1">رسالتنا</h2>
+        <p class="mb-3 h5">
+            هدفنا هو توفير رعاية طبية متكاملة للأسنان لجميع أفراد العائلة، مع التركيز على الوقاية والعلاج طويل الأمد.
+            نحرص على أن يشعر كل مريض بالراحة والثقة أثناء علاجه.
+        </p>
+
+        <h2 class="mb-1">
+            لماذا تختارنا؟
+        </h2>
+        <ul class="mb-3 fw-bold">
+            <li>فريق متخصص من الأطباء ذوي الخبرة</li>
+            <li>أحدث التقنيات والأجهزة الطبية</li>
+            <li>
+                بيئة مريحة وآمنة
+            </li>
+            <li>
+                خدمات طبية متكاملة للأسنان
+            </li>
+            <li>علاج اللثة</li>
+        </ul>
+
+        <p class="mb-3 h5">
+            نحن هنا لمساعدتكم على الحفاظ على صحة أسنانكم، لأن صحة فمكم هي أولويتنا!
+        </p>
+    </div>
+    <div class="px-3">
+        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m12!1m3!1d1974.7272338255343!2d31.364333310484326!3d31.043039858673055!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!5e0!3m2!1sen!2seg!4v1727029295677!5m2!1sen!2seg"
+             height="450" style="border:0;width:100%;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+    </div>
+    <div id="contact-info" style="border-top:2px solid" class="my-3 py-3 d-flex flex-column flex-md-row justify-content-between">
+        <div id="addresses" class="mb-md-0 mb-3">
+            <h2>عناوينا</h2>
+            @if (data is { })
+            {
+                foreach (var address in data.Address)
+                {
+                    <p class="h6">@address</p>
+                }
+            }
+        </div>
+        <div id="phone-numbers" class="mb-md-0 mb-3">
+            <h2>تواصل معنا</h2>
+            <div class="d-flex flex-column">
+                @if(data is {})
+                {
+                    foreach (var number in data.Phones)
+                    {
+                        <a href="tel:@number">@number</a>
+                    }
+
+                }
+            </div>
+        </div>
+        <div id="work-hours" class="mb-md-0 mb-3">
+            <h2>مواعيدنا</h2>
+            @if (data is { })
+            {
+                <p class="h6">مواعيد العمل : @data.WorkingHours</p>
+                <p class="h6">أيام العمل : @data.WorkingDays</p>
+            }
+
+        </div>
+    </div>
+</div>

@@ -23,12 +23,12 @@ namespace Clinic_system.Controllers
         [Authorize]
         public async Task<IActionResult> Index()
         {
-            if (int.TryParse(User.FindFirst("id")?.Value,out int id))
+            if (int.TryParse(User.FindFirst(ClaimTypes.NameIdentifier)?.Value, out int id))
             {
                 var account = await _userService.GetByIdAsync(id);
                 ViewBag.FullName = account.FullName;
             }
-            return View();
+            return RedirectToAction("Index","Dashboard");
         }
         [HttpGet]
         public IActionResult Login()

@@ -1,5 +1,6 @@
 ﻿using Clinic_system.Data;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
 
 namespace Clinic_system.Services
 {
@@ -40,6 +41,13 @@ namespace Clinic_system.Services
                 _dbSet.Remove(entity);
                 await SaveChangesAsync();
             }
+        }
+
+        public async Task<IEnumerable<TEntity>> Search (Func<TEntity,bool> func)
+        {
+            var data = await _dbSet.AsNoTracking().ToListAsync();
+            data = data.Where(func).ToList();
+            return data;
         }
 
         public async Task SaveChangesAsync()

@@ -1,10 +1,10 @@
 ﻿@model BookViewModel
 @{
-    Layout = "_Layout";
+    Layout = "_DashboardLayout";
     ViewData["Title"] = "حجز موعد";
     var year = DateTime.Now.Year;
     var month = DateTime.Now.Month;
-    var day = DateTime.Now.Hour > 16 ? DateTime.Now.Day+1 :DateTime.Now.Day;
+    var day = DateTime.Now.Hour > 16 ? DateTime.Now.Day + 1 : DateTime.Now.Day;
 }
 
 <div class="container">

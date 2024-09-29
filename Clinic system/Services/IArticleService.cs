@@ -4,8 +4,8 @@ namespace Clinic_system.Services
 {
     public interface IArticleService : IGenericService<Article>
     {
-        Task UpdateThumbnail(Article article, IFormFile img);
-        void DeleteThumbnail(string img);
+        Task UpdateImage(Article article, IFormFile file);
+        void DeleteImage(Article article);
 
     }
 }

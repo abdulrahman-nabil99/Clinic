@@ -25,7 +25,7 @@ namespace Clinic_system.Models
         public virtual MedicalRecord? MedicalRecord { get; set; }
 
         // Service
-        public int ServiceId { get; set; }
+        public int? ServiceId { get; set; }
         [ForeignKey("ServiceId")]
         public virtual Service? Service { get; set; }
 

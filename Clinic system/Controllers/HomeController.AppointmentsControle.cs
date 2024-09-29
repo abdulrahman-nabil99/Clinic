@@ -49,10 +49,10 @@ namespace Clinic_system.Controllers
             var model = new BookViewModel()
             {
                 Name = patient.FullName,
-                Email = patient.Email,
+                Email = patient.Email ?? "No Email Registered",
                 Phone = patient.PhoneNumber,
                 Date = appointment.AppointmentDate,
-                ServiceId = appointment.ServiceId
+                ServiceId = appointment.ServiceId is null ? 0 : appointment.ServiceId.Value,
             };
             return View(model);
         }

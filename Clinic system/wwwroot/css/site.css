@@ -93,26 +93,6 @@ body > main {
   flex-wrap: wrap;
   justify-content: space-between;
 }
-.service-card {
-  border-radius: 8px;
-  padding: 0;
-  overflow: hidden;
-  background-color: white;
-  width: 30%;
-  margin-bottom: 30px;
-}
-.service-card img {
-  width: 100%;
-  border-bottom: 2px solid gold;
-}
-.service-card h3 {
-  color: #343a40;
-  padding: 5px 10px;
-}
-.service-card p {
-  color: #343a40;
-  padding: 0 10px;
-}
 #contact-us {
   padding: 30px 0;
 }
@@ -160,6 +140,12 @@ textarea{
     resize: none;
 }
 
+.card img {
+    width: 100%;
+    object-fit: cover;
+    object-position: center center;
+    height: 300px;
+}
 footer {
     background-color: #343a40;
     border-top: 10px solid #fdd31d;
@@ -190,14 +176,38 @@ footer ul a:hover {
   text-decoration: none;
   color: #fdd31d;
 }
-@media (max-width: 990px) and (min-width: 576px) {
-  .service-card {
-    width: 45%;
-  }
+#our-services .card {
+    height: 100%;
+    background-color: #343a40;
+    border: 1px solid white;
+    transition:all ease-in 200ms
+}
+#our-services .card h5 {
+    color:gold;
+}
+#our-services .card p {
+    color:white;
+}
+#our-services .card:hover{
+    background-color:white;
+}
+#our-services .card:hover h5{
+    color:darkgoldenrod;
+}
+#our-services .card:hover p{
+    color:#343a40;
 }
 
+#about-img{
+    width:100%;
+    max-height:400px;
+    object-fit:cover;
+    object-position:center center;
+    border-radius:20px;
+    margin-bottom:15px;
+}
 @media (max-width: 767px) {
-  .navbar-collapse {
+    .navbar-collapse {
     order: 2 !important;
   }
   .book-now {
@@ -210,9 +220,7 @@ footer ul a:hover {
   .navbar-nav {
     padding-right: 0;
   }
-  .service-card {
-    width: 100%;
-  }
+
   #contact-us form > .form-floating {
     width: 100%;
   }

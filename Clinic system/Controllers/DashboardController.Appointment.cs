@@ -1,6 +1,10 @@
-﻿using Clinic_system.Models;
+﻿using Clinic_system.Helpers;
+using Clinic_system.Models;
 using Clinic_system.Services;
+using Clinic_system.ViewModels;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Globalization;
 
 namespace Clinic_system.Controllers
 {
@@ -31,5 +35,30 @@ namespace Clinic_system.Controllers
             return RedirectToAction("Appointments", "Dashboard", new { targetDate = date });
         }
 
+        [HttpGet]
+        public async Task<IActionResult> AddAppointment()
+        {
+            var services = await _servicesService.GetAllActiveServicesAsync();
+            ViewBag.Services = new SelectList(services, "ServiceId", "ServiceName");
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddAppointment(BookViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                var services = await _servicesService.GetAllActiveServicesAsync();
+                ViewBag.Services = new SelectList(services, "ServiceId", "ServiceName");
+                ModelState.AddModelError("", "البيانات غير صالحة");
+                return View();
+            }
+
+            var patient = await _patientService.GetOrCreatePatientAsync(model);
+            var appointment = await _appointmentService.CreateAppointmentAsync(model, patient);
+
+            return RedirectToAction("Appointments", new { targetDate=appointment.AppointmentDate.Date });
+
+        }
     }
 }

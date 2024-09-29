@@ -1,0 +1,30 @@
+﻿@model IEnumerable<Service>
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = "الخدمات";
+}
+
+<div class="container">
+    @if (Model.Any())
+    {
+        <div class="row row-cols-xxl-3 row-cols-lg-2 row-cols-sm-1">
+            @foreach (Service service in Model)
+            {
+                <div style="padding:20px 10px">
+                    <div class="card text-center" style="height:100%;">
+                        <img src="@($"/imgs/services/{service.ServiceImage}")" class="card-img-top" alt="@service.ServiceName">
+                        <div class="card-body">
+                            <h5 class="card-title">@service.ServiceName</h5>
+                            <p class="card-text">@service.ServiceDescription</p>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <h2 class="text-warning">لا يوجد خدمات لعرضها</h2>
+    }
+</div>
+

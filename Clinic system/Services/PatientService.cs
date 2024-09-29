@@ -19,7 +19,7 @@ namespace Clinic_system.Services
         public async Task<Patient> GetOrCreatePatientAsync(BookViewModel model)
         {
             var patient = await GetPatientByPhoneAsync(model.Phone);
-            if (patient == null)
+            if (patient is not { })
             {
                 patient = new Patient
                 {
@@ -29,7 +29,14 @@ namespace Clinic_system.Services
                 };
                 await AddAsync(patient);
             }
+            else
+            {
+                patient.Email = model.Email;
+                await UpdateAsync(patient);
+            }
             return patient;
         }
+
+
     }
 }

@@ -9,12 +9,14 @@ namespace Clinic_system.Controllers
 {
     public partial class DashboardController : Controller
     {
+        [Authorize(Roles ="Admin")]
         public async Task<IActionResult> Doctors()
         {
             var doctors = await _userService.GetDoctorsAsync();
             return View(doctors);
         }
 
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> Receptionists()
         {
             var receptionists = await _userService.GetReceptionistsAsync();
@@ -22,6 +24,7 @@ namespace Clinic_system.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> NewUser()
         {
             var roles = await _roleService.GetAllAsync();
@@ -31,10 +34,19 @@ namespace Clinic_system.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> NewUser(User user)
         {
             if (ModelState.IsValid)
             {
+                if(await _userService.GetUserByEmailAsync(user.Email) is { })
+                {
+                    ModelState.AddModelError("", "This Email is already registered");
+                    var roles = await _roleService.GetAllAsync();
+                    ViewBag.Roles = new SelectList(roles, "RoleId", "RoleName");
+                    ViewBag.Action = "add";
+                    return View("UserForm");
+                }
                 user.Password = PasswordHelper.HashPassword(user.Password);
                 await _userService.AddAsync(user);
             }
@@ -50,6 +62,7 @@ namespace Clinic_system.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(int? id)
         {
             if (id != null)
@@ -69,6 +82,7 @@ namespace Clinic_system.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUser(User user)
         {
             ModelState.Remove("Password");
@@ -95,6 +109,7 @@ namespace Clinic_system.Controllers
         }
 
         [HttpGet]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUserPassword(int? id)
         {
             if (id != null)
@@ -109,6 +124,7 @@ namespace Clinic_system.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateUserPassword(int UserId ,string Password)
         {
             var user = await _userService.GetByIdAsync(UserId);
@@ -122,6 +138,7 @@ namespace Clinic_system.Controllers
 
         [HttpGet]
         [Route("Dashboard/User/delete/{id?}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser(int? id)
         {
             if (id is null) return RedirectToAction("index", "dashboard");
@@ -140,6 +157,7 @@ namespace Clinic_system.Controllers
 
         [HttpPost]
         [Route("Dashboard/User/delete/{id?}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteUser()
         {
             var action = "";

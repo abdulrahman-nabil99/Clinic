@@ -9,7 +9,6 @@
     <thead>
         <tr class="bg-light">
             <th>رقم التقرير</th>
-            <th>إسم المريض</th>
             <th>تاريخ التقرير</th>
             <th>التشخيص</th>
             <th>العلاج</th>
@@ -29,7 +28,6 @@
             {
                 <tr>
                     <td>@record.MedicalRecordId</td>
-                    <td>@record.Patient.FullName</td>
                     <td>@record.RecordDate.Date.ToString("D", new CultureInfo("ar-EG"))</td>
                     <td>@record.Diagnosis</td>
                     <td>@record.Treatment</td>

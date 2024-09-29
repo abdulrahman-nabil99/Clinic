@@ -8,5 +8,7 @@
         Task UpdateAsync(TEntity entity);
         Task DeleteAsync(TEntity entity);
         Task SaveChangesAsync();
+        Task<IEnumerable<TEntity>> Search(Func<TEntity, bool> func);
+
     }
 }

@@ -18,7 +18,7 @@ namespace Clinic_system.Controllers
             var hasAccess = HttpContext.Session.GetString("HasAccess") == "true";
             var phone = HttpContext.Session.GetString("Phone");
 
-            if (hasAccess || phone is not null)
+            if (hasAccess && phone is not null)
                 return RedirectToAction("MyAppointments", "Home");
 
             return View();
@@ -27,8 +27,6 @@ namespace Clinic_system.Controllers
         [HttpPost]
         public async Task<IActionResult> TrackAppointments(TrackViewModel model)
         {
-
-
             if (!ModelState.IsValid ||
                 await _patientService.GetPatientByPhoneAsync(model.PhoneNumber) is not { } patient ||
                 patient.Email != model.EmailAddress)

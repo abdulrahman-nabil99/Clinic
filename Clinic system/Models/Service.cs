@@ -7,7 +7,9 @@ namespace Clinic_system.Models
         [Key]
         public int ServiceId { get; set; }
         public string ServiceName { get; set; }
-         // img , description
+        public string ServiceDescription { get; set; }
+        public string ServiceImage { get; set; } = "default.jpg";
+        public bool IsActive { get; set; } = true;
         public virtual ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
     }
 }

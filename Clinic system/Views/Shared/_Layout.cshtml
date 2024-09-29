@@ -1,4 +1,16 @@
-﻿<!DOCTYPE html>
+﻿@using Newtonsoft.Json
+@{
+    string jsonFilePath = "wwwroot/data/details.json";
+    DataModel? data;
+
+    using (StreamReader reader = new StreamReader(jsonFilePath))
+    {
+        string json = reader.ReadToEnd();
+        data = JsonConvert.DeserializeObject<DataModel>(json);
+    }
+    var socials = data?.Social;
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -15,7 +27,7 @@
     <header>
         <nav class="navbar navbar-expand-md navbar-toggleable-md position-fixed w-100 p-0">
             <div class="container justify-content-between">
-                <a asp-action="Index" asp-controller="Home" class="navbar-brand order-0">عيادة</a>
+                <a asp-action="Index" asp-controller="Home" class="navbar-brand order-0">  </a>
                 <button class="navbar-toggler order-2"
                         type="button"
                         data-bs-toggle="collapse"
@@ -32,11 +44,11 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link">خدماتنا</a>
+                            <a asp-action="Services" asp-controller="Home" class="nav-link">خدماتنا</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link">مقالات</a>
+                            <a asp-action="Articles" asp-controller="Home" class="nav-link">مقالات</a>
                         </li>
 
 
@@ -45,7 +57,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link">من نحن</a>
+                            <a asp-action="AboutUs" asp-controller="Home" class="nav-link">من نحن</a>
                         </li>
                     </ul>
                 </div>
@@ -64,9 +76,9 @@
                         <h3>روابط سريعة</h3>
                         <ul class="list-unstyled">
                             <li class="mb-1"><a asp-action="Index" asp-controller="Home">الرئيسية</a></li>
-                            <li class="mb-1"><a href="">من نحن</a></li>
-                            <li class="mb-1"><a href="">خدماتنا</a></li>
-                            <li class="mb-1"><a href="">مقالات</a></li>
+                            <li class="mb-1"><a asp-action="AboutUs" asp-controller="Home">من نحن</a></li>
+                            <li class="mb-1"><a asp-action="Services" asp-controller="Home">خدماتنا</a></li>
+                            <li class="mb-1"><a asp-action="Articles" asp-controller="Home">مقالات</a></li>
                             <li class="mb-1"><a asp-action="Book" asp-controller="Home">حجز موعد</a></li>
                         </ul>
                     </div>
@@ -76,49 +88,29 @@
                         <h3>حساباتنا</h3>
                         <ul class="list-unstyled">
                             <li class="mb-1">
-                                <a href="" class="d-flex align-items-center w-25">
+                                <a href="@(socials is {}? socials.Facebook:"#")" class="d-flex align-items-center w-25">
                                     فيسبوك
                                 </a>
                             </li>
                             <li class="mb-1">
-                                <a href="" class="d-flex align-items-center w-25">
+                                <a href="@(socials is {}? socials.Twitter:"#")" class="d-flex align-items-center w-25">
                                     تويتر
                                 </a>
                             </li>
                             <li class="mb-1">
-                                <a href="" class="d-flex align-items-center w-25">
+                                <a href="@(socials is {}? socials.Instagram:"#")" class="d-flex align-items-center w-25">
                                     انستجرام
                                 </a>
                             </li>
                             <li class="mb-1">
-                                <a href="" class="d-flex align-items-center w-25">
+                                <a href="@(socials is {}? socials.Youtube:"#")" class="d-flex align-items-center w-25">
                                     يوتيوب
                                 </a>
                             </li>
                         </ul>
                     </div>
                 </div>
-                <div class="col-6 col-lg-4 col-xl-3">
-                    <div>
-                        <h3>تواصل معنا</h3>
-                        <ul class="list-unstyled">
-                            <li class="mb-1">
-                                <h4>العنوان</h4>
-                                <p>--شارع , المنصورة , بجوار</p>
-                            </li>
-                            <li class="mb-1">
-                                <h4>أرقامنا</h4>
-                                <p>--00000000000</p>
-                                <p>--10000000000</p>
-                            </li>
-                            <li class="mb-1">
-                                <h4>مواعيدنا</h4>
-                                <p>--من الأحد إلى الخميس</p>
-                                <p>--الجمعة والسبت اجازة</p>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
+
             </div>
         </div>
     </footer>

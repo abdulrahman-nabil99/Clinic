@@ -1,0 +1,10 @@
+﻿@model Article
+@{
+    Layout = "_Layout";
+    ViewData["Title"] = Model.Title;
+}
+
+<div class="container" style="padding:50px 0px; ">
+    <p class="h5 ">-<span class="text-decoration-underline">@Model.Title</span></p>
+    @Html.Raw(Model.Content)
+</div>

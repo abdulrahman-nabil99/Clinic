@@ -4,28 +4,28 @@
     ViewData["Title"] = "تسجيل الدخول";
 
 }
-<form method="post" class="w-75 mx-auto">
-    <h2 class="text-center text-success">تسجيل الدخول إلى حسابك</h2>
-    <div class="row mb-3 mx-0 justify-content-center">
-        <div class="col-12 mb-3">
-            <label asp-for="Email" class="form-label p-0">الإيميل</label>
-            <input asp-for="Email" class="form-control" type="email" />
-            <span asp-validation-for="Email"></span>
-        </div>
+<div class="container">
+    <form method="post" class="w-75 mx-auto py-5">
+        <h2 class="text-center text-success">تسجيل الدخول إلى حسابك</h2>
+        <div class="row mb-3 mx-0 justify-content-center">
+            <div class="col-12 mb-3">
+                <label asp-for="Email" class="form-label p-0">الإيميل</label>
+                <input asp-for="Email" class="form-control" type="email" />
+                <span asp-validation-for="Email"></span>
+            </div>
 
-        <div class="col-12">
-            <label asp-for="Password" class="form-label p-0">الرقم السري</label>
-            <input asp-for="Password" class="form-control" type="password" />
-            <span asp-validation-for="Password"></span>
+            <div class="col-12">
+                <label asp-for="Password" class="form-label p-0">الرقم السري</label>
+                <input asp-for="Password" class="form-control" type="password" />
+                <span asp-validation-for="Password"></span>
+            </div>
         </div>
-    </div>
-    <div asp-validation-summary="ModelOnly"></div>
-    <div class="mt-2 d-flex justify-content-end gap-3">
-        <input type="submit" value="تسجيل الدخول" class="btn btn-success d-inline-block  px-3" />
-        <a asp-action="register" asp-controller="account" class="btn btn-primary px-3 d-inline-block" />التسجيل</a>
-    </div>
-</form>
-
+        <div asp-validation-summary="ModelOnly"></div>
+        <div class="mt-2 d-flex justify-content-end gap-3">
+            <input type="submit" value="تسجيل الدخول" class="btn btn-success d-inline-block  px-3" />
+        </div>
+    </form>
+</div>
 @section Scripts {
     <partial name="_ValidationScriptsPartial">
 }

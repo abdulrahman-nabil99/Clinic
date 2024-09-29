@@ -3,11 +3,15 @@
     ViewData["Title"] = "الحجوزات";
     Layout = "_DashboardLayout";
 }
-
-<form method="get" class="my-4">
-    <input type="date" name="targetDate" class="form-control w-50 d-inline-block" />
-    <input type="submit" value="بحث" class="btn btn-primary d-inline-block" />
-</form>
+<div class=" my-4 row">
+    <form method="get" class="col-10">
+        <input type="date" name="targetDate" class="form-control w-50 d-inline-block" />
+        <input type="submit" value="بحث" class="btn btn-primary d-inline-block" />
+    </form>
+    <div class="col-2">
+        <a class="btn btn-primary" asp-action="AddAppointment" asp-controller="Dashboard">إضافة حجز</a>
+    </div>
+</div>
 <h2 class="h2">التاريخ : @ViewBag.Date.ToString("D",new CultureInfo("ar-EG"))</h2>
 <table class="table-bordered table-hover table">
     <thead>
@@ -32,8 +36,8 @@
             {
                 <tr>
                     <td>@appointment.AppointmentId</td>
-                    <td>@appointment.Patient.FullName</td>
-                    <td>@appointment.Service.ServiceName</td>
+                    <td>@appointment.Patient?.FullName</td>
+                    <td>@appointment.Service?.ServiceName</td>
                     <td>@(appointment.Status==AppointmentStatus.Booked?"تم الحجز":(appointment.Status==AppointmentStatus.Cancelled?"تم الإلغاء":"تم الكشف"))</td>
                     <td>
                         <a asp-action="NewRecord" asp-controller="Dashboard" asp-route-id="@appointment.AppointmentId" class="btn btn-info">إضافة التقرير الطبي</a>

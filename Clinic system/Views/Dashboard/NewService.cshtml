@@ -1,0 +1,54 @@
+﻿@model Service
+@{
+    Layout = "_DashboardLayout";
+    ViewData["Title"] = ViewBag.Action == "add" ? "خدمة جديدة" : "تحديث بيانات خدمة";
+
+}
+
+<form method="post" class="text-dark p-5"  enctype="multipart/form-data">
+    <h2 class="text-center text-success">@(ViewBag.Action == "add" ? "إضافة خدمة جديدة" : $"تحديث بيانات {Model.ServiceName}")</h2>
+    <div asp-validation-summary="ModelOnly"></div>
+
+    <div class="row mb-3 mx-0 justify-content-center">
+        @if (ViewBag.Action == "update")
+        {
+            <input asp-for="ServiceId" hidden class="form-control" />
+            <input asp-for="ServiceImage" hidden class="form-control" />
+        }
+        <div class="col-12 ">
+            <label asp-for="ServiceName" class="fw-bold d-block form-label mt-3">عنوان الخدمة</label>
+            <input asp-for="ServiceName" class="form-control" />
+            <span asp-validation-for="ServiceName"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="ServiceDescription" class="fw-bold d-block form-label mt-3">وصف الخدمة</label>
+            <input asp-for="ServiceDescription" class="form-control" />
+            <span asp-validation-for="ServiceDescription"></span>
+        </div>
+
+        <div class="col-12">
+            <label asp-for="IsActive" class="fw-bold d-block form-label mt-3">حالة الخدمة</label>
+            <select asp-for="IsActive" class="form-select" asp-items="ViewBag.Roles">
+                <option value="" selected>إختر ...</option>
+                <option value="true">مفعلة</option>
+                <option value="false" >غير مفعلة</option>
+            </select>
+            <span asp-validation-for="IsActive"></span>
+        </div>
+
+        <div class="col-12">
+            <label class="fw-bold d-block form-label mt-3">صورة مصغرة للخدمة</label>
+            <input type="file" name="img" class="form-control" />
+        </div>
+
+    </div>
+
+    <div class="mt-2 d-flex justify-content-end gap-3">
+        <input type="submit" value="@(ViewBag.Action=="add"?"إضافة":"تعديل")" class="btn btn-success d-inline-block  px-3" />
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial">
+}

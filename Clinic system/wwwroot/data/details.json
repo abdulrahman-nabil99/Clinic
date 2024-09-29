@@ -1,0 +1,12 @@
+{
+  "social": {
+    "facebook": "https://www.facebook.com/",
+    "twitter": "https://www.x.com/",
+    "instagram": "https://www.instagram.com/",
+    "youtube": "https://www.youtube.com/"
+  },
+  "phones": [ "01009878987", "01554787878" ],
+  "address" : [ "المنصورة - جيهان - بجوار الجلاء", "المنصورة - جيهان - بجوار الجلاء" ],
+  "workingHours": "11 صباحاً - 6 مساءاً",
+  "workingDays": "الأحد - الخميس"
+}

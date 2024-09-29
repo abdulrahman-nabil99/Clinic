@@ -1,4 +1,5 @@
-﻿using Clinic_system.Models;
+﻿using Clinic_system.Helpers;
+using Clinic_system.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Clinic_system.Data
@@ -23,14 +24,9 @@ namespace Clinic_system.Data
                     new Role { RoleId = 2, RoleName = "Doctor" },
                     new Role { RoleId = 3, RoleName = "Receptionist" });
 
-            modelBuilder.Entity<Service>().HasData(
-                    new Service { ServiceId = 1, ServiceName = "تنظيف" },
-                    new Service { ServiceId = 2, ServiceName = "تبييض" },
-                    new Service { ServiceId = 3, ServiceName = "تقويم" },
-                    new Service { ServiceId = 4, ServiceName = "زراعة" });
 
             modelBuilder.Entity<User>().HasData(
-                new User { UserId = 1, RoleId = 1, FullName = "Admin", Password = "100200Art", Email = "admin@admin.com" });
+                new User { UserId = 1, RoleId = 1, FullName = "Admin", Password = PasswordHelper.HashPassword("100200300"), Email = "admin@admin.com" });
 
             base.OnModelCreating(modelBuilder);
         }
